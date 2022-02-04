@@ -2,7 +2,7 @@
     "compilerOptions": {
         "module": "system",
         "noImplicitAny": true,
-        "removeComments": true,
+        "removeComments": false,
         "preserveConstEnums": true,
         "outFile": "./src/index.js",
         "sourceMap": true

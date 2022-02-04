@@ -1,15 +1,16 @@
+import { Force } from "../force/force";
 import { Shape } from "../shape/shape";
 import { setObject } from "../utils/utils";
 /** A general objcet that can be calculated by the core physical simulator */
 export class GeneralObject {
+    /** The id counter of the object */
+    static idCounter: number = 0;
     /** The name of the object */
-    name: string;
+    readonly name: string;
     /** The description of the object */
     description: string;
     /** The id of the object */
-    id: number;
-    /** The id counter of the object */
-    static idCounter: number = 0;
+    readonly id: number;
     /** The shape of the object */
     shape: Shape;
     /** The mass of the object */
@@ -18,6 +19,8 @@ export class GeneralObject {
     velocity: [number, number];
     /** The acceleration of the object */
     acceleration: [number, number];
+    /** The force applied on the object */
+    forces: Force[] = [];
 
     /**
      * Creates a new general object
@@ -39,5 +42,15 @@ export class GeneralObject {
     /** Set the mass of the object */
     setMass(mass: number) {
         this.mass = mass;
+    }
+
+    /** Add force on object */
+    addForce(force: Force) {
+        this.forces.push(force);
+    }
+
+    /** Remove force on object */
+    removeForce(force: Force) {
+        this.forces.splice(this.forces.indexOf(force), 1);
     }
 }
