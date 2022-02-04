@@ -1,0 +1,14 @@
+{
+  "name": "cnb-physics",
+  "version": "1.0.0",
+  "description": "A more realistic physics simulation engine",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "keywords": [
+    "physics"
+  ],
+  "author": "AncientTemple",
+  "license": "ISC"
+}
