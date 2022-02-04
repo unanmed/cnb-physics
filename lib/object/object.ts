@@ -64,4 +64,21 @@ export class GeneralObject {
     removeForce(force: Force) {
         this.forces.splice(this.forces.indexOf(force), 1);
     }
+
+    /** Add acceleration on the object */
+    addAcceleration(x: number, y: number) {
+        this.acceleration[0] += x;
+        this.acceleration[1] += y;
+    }
+
+    /** Judge whether the object is in the given field */
+    isInField(field: Field<any>) {
+        if (field instanceof NonScopedField) return true;
+    }
+
+    /** Move this object */
+    move() {
+        this.position[0] += this.velocity[0];
+        this.position[1] += this.velocity[1];
+    }
 }

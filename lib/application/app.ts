@@ -1,4 +1,5 @@
 import { Analyzer } from "../analyzer/analyzer";
+import { getObjectList } from "../utils/utils";
 
 /** The interface of the config of the app */
 export interface AppConfig {
@@ -75,7 +76,8 @@ export class App {
 
     /** Update the app */
     update(): void {
-
+        this.analyzer.analyzeAllField();
+        this.moveAllObjects();
     }
 
     /** Add loop function */
@@ -86,5 +88,13 @@ export class App {
     /** Remove loop function */
     removeLoop(func: (loopTimes?: number, deltaTime?: number) => void): void {
         this.loopFuncs.splice(this.loopFuncs.indexOf(func), 1);
+    }
+
+    /** Move all the objects */
+    moveAllObjects(): void {
+        const list = Object.values(getObjectList());
+        for (const object of list) {
+            object.move();
+        }
     }
 }
