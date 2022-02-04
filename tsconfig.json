@@ -8,10 +8,10 @@
         "sourceMap": true
     },
     "include": [
-        "src/**/*"
+        "lib/**/*"
     ],
     "exclude": [
-        "node_modules",
+        "node_modules"
     ],
     "target": "es6",
     "module": "commonjs",
