@@ -10,5 +10,9 @@
     "physics"
   ],
   "author": "AncientTemple",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+		"type": "git",
+		"url": "https://github.com/unanmed/cnb-physics"
+	}
 }
