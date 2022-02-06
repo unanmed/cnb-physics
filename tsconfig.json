@@ -1,18 +1,21 @@
 {
     "compilerOptions": {
-        "module": "system",
+        "module": "es6",
         "noImplicitAny": true,
         "removeComments": false,
         "preserveConstEnums": true,
-        "outFile": "./src/index.js",
-        "sourceMap": true
+        "sourceMap": false,
+        "declaration": true,
+        "target": "es6",
+        "outDir": "./dist",
+        "lib": [
+            "es2020", "dom"
+        ]
     },
     "include": [
-        "lib/**/*"
+        "lib/**/*", "src/*"
     ],
     "exclude": [
         "node_modules"
     ],
-    "target": "es6",
-    "module": "commonjs",
 }

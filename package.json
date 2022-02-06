@@ -1,10 +1,11 @@
 {
   "name": "cnb-physics",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "A more realistic physics simulation engine",
   "main": "index.js",
   "scripts": {
-    "test": "node index.js"
+    "test": "node index.js",
+    "build": "tsc && rollup -c"
   },
   "keywords": [
     "physics"
@@ -12,7 +13,8 @@
   "author": "AncientTemple",
   "license": "ISC",
   "repository": {
-		"type": "git",
-		"url": "https://github.com/unanmed/cnb-physics"
-	}
+    "type": "git",
+    "url": "https://github.com/unanmed/cnb-physics"
+  },
+  "files": ["index.js", "README.md", "src"]
 }

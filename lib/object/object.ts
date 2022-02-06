@@ -3,9 +3,6 @@ import { GravityField } from "../field/gravity";
 import { Force } from "../force/force";
 import { Shape } from "../shape/shape";
 import { setObject } from "../utils/utils";
-import { getObjectList } from "../utils/utils";
-
-const list = getObjectList();
 
 /** A general object that can be calculated by the core physical simulator */
 export class GeneralObject {

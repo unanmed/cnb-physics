@@ -2,8 +2,6 @@ import { NonScopedField } from "./field";
 import { constants } from "../utils/utils";
 import { GeneralObject } from "../object/object";
 
-const G = constants.G;
-
 /** A gravity field, which has no scope */
 export class GravityField extends NonScopedField<'gravity'> {
     /** The center of the gravity */
@@ -32,8 +30,8 @@ export class GravityField extends NonScopedField<'gravity'> {
         if (object === this.centralObject) return [0, 0];
         const force: [number, number] = [0, 0];
         const distance = Math.sqrt(Math.pow(object.position[0] - this.center[0], 2) + Math.pow(object.position[1] - this.center[1], 2));
-        force[0] = (this.mass * object.mass * G) / Math.pow(distance, 2);
-        force[1] = (this.mass * object.mass * G) / Math.pow(distance, 2);
+        force[0] = (this.mass * object.mass * constants.G) / Math.pow(distance, 2);
+        force[1] = (this.mass * object.mass * constants.G) / Math.pow(distance, 2);
         return force;
     }
 }

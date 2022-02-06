@@ -2,6 +2,76 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+const G = constants.G;
+/** A gravity field, which has no scope */
+class GravityField extends NonScopedField {
+    /** Create a gravity field
+     * @param {string} name The name of the field
+     * @param {GeneralObject} centralObject The central object
+     */
+    constructor(name, centralObject) {
+        super(name, "gravity");
+        this.centralObject = centralObject;
+        this.mass = centralObject.mass;
+        this.center = centralObject.position;
+    }
+    /** Calculate the force of the field
+     * @param {GeneralObject} object The object to calculate the force
+     * @returns {[number, number]} The force of the field
+     */
+    calculateForceGravity(object) {
+        if (object === this.centralObject)
+            return [0, 0];
+        const force = [0, 0];
+        const distance = Math.sqrt(Math.pow(object.position[0] - this.center[0], 2) + Math.pow(object.position[1] - this.center[1], 2));
+        force[0] = (this.mass * object.mass * G) / Math.pow(distance, 2);
+        force[1] = (this.mass * object.mass * G) / Math.pow(distance, 2);
+        return force;
+    }
+}
+
+/** A feild, which is untouchable but really exists */
+class Field {
+    /** Create a new field
+     * @param {string} name The name of the field
+     * @param {string} type The type of the field
+     * @param {[number, number]} magnitude The magnitude of the field
+     */
+    constructor(name, type, magnitude) {
+        this.name = name;
+        this.type = type;
+        this.magnitude = magnitude;
+        this.id = Field.idCounter++;
+        setField(this);
+    }
+    /** Destory this field */
+    destroy() {
+        removeField(this.name);
+    }
+    /** Calculate the force of the field */
+    calculateForce(object) {
+        if (this instanceof GravityField)
+            return this.calculateForceGravity(object);
+    }
+}
+/** The id counter of all the field */
+Field.idCounter = 0;
+/** A scoped field */
+class ScopedField extends Field {
+    /** Create a scoped field */
+    constructor(name, type, magnitude) {
+        super(name, type, magnitude);
+    }
+}
+/** A non-scoped field */
+class NonScopedField extends Field {
+    /** Create a non-scoped field */
+    constructor(name, type, magnitude) {
+        super(name, type, magnitude);
+    }
+}
+
+getObjectList();
 /** A general object that can be calculated by the core physical simulator */
 class GeneralObject {
     /**
@@ -135,74 +205,6 @@ function removeField(name) {
 /** Get the quote of field list */
 function getFieldList() {
     return fieldList;
-}
-
-/** A feild, which is untouchable but really exists */
-class Field {
-    /** Create a new field
-     * @param {string} name The name of the field
-     * @param {string} type The type of the field
-     * @param {[number, number]} magnitude The magnitude of the field
-     */
-    constructor(name, type, magnitude) {
-        this.name = name;
-        this.type = type;
-        this.magnitude = magnitude;
-        this.id = Field.idCounter++;
-        setField(this);
-    }
-    /** Destory this field */
-    destroy() {
-        removeField(this.name);
-    }
-    /** Calculate the force of the field */
-    calculateForce(object) {
-        if (this instanceof GravityField)
-            return this.calculateForceGravity(object);
-    }
-}
-/** The id counter of all the field */
-Field.idCounter = 0;
-/** A scoped field */
-class ScopedField extends Field {
-    /** Create a scoped field */
-    constructor(name, type, magnitude) {
-        super(name, type, magnitude);
-    }
-}
-/** A non-scoped field */
-class NonScopedField extends Field {
-    /** Create a non-scoped field */
-    constructor(name, type, magnitude) {
-        super(name, type, magnitude);
-    }
-}
-
-/** A gravity field, which has no scope */
-class GravityField extends NonScopedField {
-    /** Create a gravity field
-     * @param {string} name The name of the field
-     * @param {GeneralObject} centralObject The central object
-     */
-    constructor(name, centralObject) {
-        super(name, "gravity");
-        this.centralObject = centralObject;
-        this.mass = centralObject.mass;
-        this.center = centralObject.position;
-    }
-    /** Calculate the force of the field
-     * @param {GeneralObject} object The object to calculate the force
-     * @returns {[number, number]} The force of the field
-     */
-    calculateForceGravity(object) {
-        if (object === this.centralObject)
-            return [0, 0];
-        const force = [0, 0];
-        const distance = Math.sqrt(Math.pow(object.position[0] - this.center[0], 2) + Math.pow(object.position[1] - this.center[1], 2));
-        force[0] = (this.mass * object.mass * constants.G) / Math.pow(distance, 2);
-        force[1] = (this.mass * object.mass * constants.G) / Math.pow(distance, 2);
-        return force;
-    }
 }
 
 /** The core tool of the simulator, which take the task of force analysis */
