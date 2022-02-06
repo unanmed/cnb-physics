@@ -9,8 +9,8 @@ export class RoundObject extends GeneralObject {
      * @param {string} description The description of the object
      * @param {number} radius The radius of the object
      */
-    constructor(name: string, description: string, radius: number) {
-        super(name, description);
+    constructor(name: string, description: string, radius: number, mass: number) {
+        super(name, description, mass);
         this.radius = radius;
     }
 }

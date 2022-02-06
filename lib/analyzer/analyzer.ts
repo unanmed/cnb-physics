@@ -26,6 +26,7 @@ export class Analyzer {
     analyzeField(field: Field<any>): void {
         const objects = Object.values(this.objectList);
         for (const object of objects) {
+            if (!object.mass) continue;
             const force = field.calculateForce(object);
             const acceleration = [force[0] / object.mass, force[1] / object.mass];
             object.acceleration[0] += acceleration[0];

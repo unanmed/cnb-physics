@@ -17,15 +17,15 @@ export class GeneralObject {
     /** The shape of the object */
     shape: Shape;
     /** The mass of the object */
-    mass: number;
+    mass: number = 0;
     /** The velocity of the object */
-    velocity: [number, number];
+    velocity: [number, number] = [0, 0];
     /** The acceleration of the object */
-    acceleration: [number, number];
+    acceleration: [number, number] = [0, 0];
     /** The force applied on the object */
     forces: Force[] = [];
     /** The position of the object */
-    position: [number, number];
+    position: [number, number] = [0, 0];
     /** The gravity field that the object generate */
     gravityField: GravityField;
 
@@ -34,11 +34,19 @@ export class GeneralObject {
      * @param {string} name The name of the object
      * @param {string} description The description of the object
      */
-    constructor(name: string, description: string) {
+    constructor(name: string, description: string, mass: number) {
         this.name = name;
         this.description = description;
         this.id = GeneralObject.idCounter++;
+        this.gravityField = new GravityField(this.name, this);
         setObject(this, this.name);
+        this.setMass(mass);
+    }
+
+    /** Set the position of the object */
+    setPosition(x: number = this.position[0], y: number = this.position[1]) {
+        this.position[0] = x;
+        this.position[1] = y;
     }
 
     /** Set the shape of the object */

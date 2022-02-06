@@ -1,7 +1,3 @@
-'use strict';
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
 /** A general object that can be calculated by the core physical simulator */
 class GeneralObject {
     /**
@@ -10,12 +6,26 @@ class GeneralObject {
      * @param {string} description The description of the object
      */
     constructor(name, description) {
+        /** The mass of the object */
+        this.mass = 0;
+        /** The velocity of the object */
+        this.velocity = [0, 0];
+        /** The acceleration of the object */
+        this.acceleration = [0, 0];
         /** The force applied on the object */
         this.forces = [];
+        /** The position of the object */
+        this.position = [0, 0];
         this.name = name;
         this.description = description;
         this.id = GeneralObject.idCounter++;
+        this.gravityField = new GravityField(this.name, this);
         setObject(this, this.name);
+    }
+    /** Set the position of the object */
+    setPosition(x = this.position[0], y = this.position[1]) {
+        this.position[0] = x;
+        this.position[1] = y;
     }
     /** Set the shape of the object */
     setShape(shape) {
@@ -237,6 +247,8 @@ class Analyzer {
 /** The main application of the simulator */
 class App {
     constructor(config) {
+        /** The loop functions list */
+        this.loopFuncs = [];
         /** The running status of the app */
         this.status = 'running';
         this.config = config;
@@ -395,25 +407,4 @@ class Shape {
     }
 }
 
-exports.Analyzer = Analyzer;
-exports.App = App;
-exports.ConstantForce = ConstantForce;
-exports.ElectricField = ElectricField;
-exports.Field = Field;
-exports.Force = Force;
-exports.GeneralObject = GeneralObject;
-exports.GravityField = GravityField;
-exports.MagneticField = MagneticField;
-exports.NonScopedField = NonScopedField;
-exports.RoundObject = RoundObject;
-exports.ScopedField = ScopedField;
-exports.Shape = Shape;
-exports.constants = constants;
-exports.getField = getField;
-exports.getFieldList = getFieldList;
-exports.getObject = getObject;
-exports.getObjectList = getObjectList;
-exports.removeField = removeField;
-exports.removeObject = removeObject;
-exports.setField = setField;
-exports.setObject = setObject;
+export { Analyzer, App, ConstantForce, ElectricField, Field, Force, GeneralObject, GravityField, MagneticField, NonScopedField, RoundObject, ScopedField, Shape, constants, getField, getFieldList, getObject, getObjectList, removeField, removeObject, setField, setObject };

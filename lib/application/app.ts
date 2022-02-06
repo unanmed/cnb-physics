@@ -14,7 +14,7 @@ export class App {
     /** The config of the app */
     config: AppConfig;
     /** The loop functions list */
-    loopFuncs: Array<(loopTimes?: number, deltaTime?: number) => void>;
+    loopFuncs: Array<(loopTimes?: number, deltaTime?: number) => void> = [];
     /** The running status of the app */
     status: 'running' | 'paused' | 'stopped' = 'running';
     /** The analyzer */
