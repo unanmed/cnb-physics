@@ -2,9 +2,9 @@ import { Field, FieldList } from "../field/field";
 import { GeneralObject } from "../object/object";
 
 /** The object list */
-const objectList: { [key: string]: GeneralObject } = {};
+const objectList: { [key: number]: GeneralObject } = {};
 /** The field list */
-const fieldList: { [key: string]: Field<any> } = {};
+const fieldList: { [key: number]: Field<any> } = {};
 
 /** All the constants will be used in the simulator */
 export const constants = {
@@ -18,15 +18,13 @@ export const constants = {
     e: 1.602176634e-19,
 }
 
-/** Get a object from the object list
+/** Get a object by name from the object list
  * @param {string} name The name of the object
- * @returns {GeneralObject} The object. If the object doesn't exist, a new object will be created.
+ * @returns {GeneralObject} The first object named the given parameter. 
+ * If the object doesn't exist, returns undefined.
  */
-export function getObject(name: string): GeneralObject {
-    if (objectList[name] === void 0) {
-        objectList[name] = new GeneralObject(name, "");
-    }
-    return objectList[name];
+export function getObjectByName(name: string): GeneralObject {
+    return Object.values(objectList).find(object => object.name === name);
 }
 
 /** Set a object in the object list
@@ -34,19 +32,31 @@ export function getObject(name: string): GeneralObject {
  * If not filled, it will be regarded as the name of the object
  * @param {GeneralObject} object The object to be set
  */
-export function setObject(object: GeneralObject, name: string = object.name): void {
-    objectList[name] = object;
+export function setObject(object: GeneralObject): void {
+    objectList[object.id] = object;
 }
 
 /** Remove a object from the object list
  * @param {string} name The name of the object
  * @returns {boolean} Whether the object is removed
  */
-export function removeObject(name: string): boolean {
-    if (objectList[name] === void 0) {
+export function removeObjectByName(name: string): boolean {
+    if (getObjectByName(name) === void 0) {
         return false;
     }
-    delete objectList[name];
+    delete objectList[getObjectByName(name).id];
+    return true;
+}
+
+/** Remove a object by its id
+ * @param {number} id The id of the object
+ * @returns {boolean} Whether the object is removed
+ */
+export function removeObjectById(id: number): boolean {
+    if (objectList[id] === void 0) {
+        return false;
+    }
+    delete objectList[id];
     return true;
 }
 
@@ -55,17 +65,13 @@ export function getObjectList(): { [key: string]: GeneralObject } {
     return objectList;
 }
 
-/** Get a field from the field list
+/** Get a field by name from the field list
  * @param {string} name The name of the field
- * @param {string} type The type of the field, if the field is not in the field list,
- * and a new field typed this will be created.
+ * @param {string} type The type of the field, if the field is not in the field list, returns undefined
  * @returns {Field} The field
  */
-export function getField(name: string, type?: keyof FieldList): Field<any> {
-    if (fieldList[name] === void 0) {
-        fieldList[name] = new Field(name, type);
-    }
-    return fieldList[name];
+export function getFieldByName(name: string): Field<any> {
+    return Object.values(fieldList).find(field => field.name === name);
 }
 
 /** Set a field in the field list
@@ -73,19 +79,32 @@ export function getField(name: string, type?: keyof FieldList): Field<any> {
  * If not filled, it will be regarded as the name of the field
  * @param {Field} field The field to be set
  */
-export function setField(field: Field<any>, name: string = field.name): void {
-    fieldList[name] = field;
+export function setField(field: Field<any>): void {
+    fieldList[field.id] = field;
 }
 
 /** Remove a field from the field list
  * @param {string} name The name of the field
  * @returns {boolean} Whether the field is removed
  */
-export function removeField(name: string): boolean {
-    if (fieldList[name] === void 0) {
+export function removeFieldByName(name: string): boolean {
+    const obj = getFieldByName(name);
+    if (obj === void 0) {
         return false;
     }
-    delete fieldList[name];
+    delete fieldList[getFieldByName(name).id];
+    return true;
+}
+
+/** Remove a field by its id
+ * @param {number} id The id of the field
+ * @returns {boolean} Whether the field is removed
+ */
+export function removeFieldById(id: number): boolean {
+    if (fieldList[id] === void 0) {
+        return false;
+    }
+    delete fieldList[id];
     return true;
 }
 

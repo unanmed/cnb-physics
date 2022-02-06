@@ -31,6 +31,8 @@ export class Analyzer {
             const acceleration = [force[0] / object.mass, force[1] / object.mass];
             object.acceleration[0] += acceleration[0];
             object.acceleration[1] += acceleration[1];
+            object.velocity[0] += acceleration[0];
+            object.velocity[1] += acceleration[1];
         }
     }
 }

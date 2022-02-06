@@ -1,13 +1,13 @@
-import { ElectricField } from "./electric";
+import { UniformElectricField } from "./electric";
 import { GravityField } from "./gravity";
 import { MagneticField } from "./magnetic";
-import { removeField, setField } from "../utils/utils";
+import { removeFieldById, setField } from "../utils/utils";
 import { Shape } from "../shape/shape";
 import { GeneralObject } from "../object/object";
 
 /** The interface of all types of feild */
 export interface FieldList {
-    electric: ElectricField;
+    electric: UniformElectricField;
     gravity: GravityField;
     magnetic: MagneticField;
 }
@@ -40,12 +40,13 @@ export class Field<T extends keyof FieldList> {
 
     /** Destory this field */
     destroy() {
-        removeField(this.name);
+        removeFieldById(this.id);
     }
 
     /** Calculate the force of the field */
     calculateForce(object: GeneralObject): [number, number] {
         if (this instanceof GravityField) return this.calculateForceGravity(object);
+        if (this instanceof UniformElectricField) return this.calculateForceElectic(object);
     }
 }
 

@@ -61,9 +61,11 @@ export class App {
                 let deltaTime = time - lastTime;
                 lastTime = time;
                 loopTimes++;
-                self.update();
-                for (let func of self.loopFuncs) {
-                    func(loopTimes, deltaTime);
+                for (let i = 0; i < this.config.refreshRate; i++) {
+                    self.update();
+                    for (let func of self.loopFuncs) {
+                        func(loopTimes, deltaTime);
+                    }
                 }
                 requestAnimationFrame(this.loop);
             } else if (self.status === 'stopped') {
@@ -94,7 +96,7 @@ export class App {
     moveAllObjects(): void {
         const list = Object.values(getObjectList());
         for (const object of list) {
-            object.move();
+            object.move(this.config.refreshRate);
         }
     }
 }

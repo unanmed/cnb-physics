@@ -28,6 +28,8 @@ export class GeneralObject {
     position: [number, number] = [0, 0];
     /** The gravity field that the object generate */
     gravityField: GravityField;
+    /** The charge of the object */
+    charge: number = 0;
 
     /**
      * Creates a new general object
@@ -39,7 +41,7 @@ export class GeneralObject {
         this.description = description;
         this.id = GeneralObject.idCounter++;
         this.gravityField = new GravityField(this.name, this);
-        setObject(this, this.name);
+        setObject(this);
         this.setMass(mass);
     }
 
@@ -82,8 +84,19 @@ export class GeneralObject {
     }
 
     /** Move this object */
-    move() {
-        this.position[0] += this.velocity[0];
-        this.position[1] += this.velocity[1];
+    move(rate: number = 1) {
+        this.position[0] += this.velocity[0] / rate;
+        this.position[1] += this.velocity[1] / rate;
+    }
+
+    /** Set the velocity of the object */
+    setVelocity(x: number, y: number) {
+        this.velocity[0] = x;
+        this.velocity[1] = y;
+    }
+
+    /** Set the charge of the object */
+    setCharge(charge: number) {
+        this.charge = charge;
     }
 }
