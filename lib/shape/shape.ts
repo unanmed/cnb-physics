@@ -28,10 +28,11 @@ export class Shape {
     }
 
     /** Set the node of the shape. The node is a 2D array that every node
-     *  includes the position of x and y. The node must be closed.
+     *  includes the position of x and y. The first and the end of the node should be different.
      */
     setNode(node: Array<[number, number]>) {
         this.node = node;
+        this.node.push(node[0]);
     }
 
     /** Set the radius of the shape */
@@ -49,7 +50,7 @@ export class Shape {
             for (let i = 0; i < this.node.length - 1; i++) {
                 const y1 = this.node[i][1];
                 const y2 = this.node[i + 1][1];
-                if (point[1] >= Math.min(y1, y2) && point[1] <= Math.max(y1, y2)) {
+                if (point[1] >= Math.min(y1, y2) && point[1] <= Math.max(y1, y2) && point[0] <= Math.max(this.node[i][0], this.node[i + 1][0])) {
                     points++;
                 }
             }

@@ -21,6 +21,8 @@ export class App {
     analyzer: Analyzer;
     /** The loop function in animation frame */
     loop: (loopTimes?: number, deltaTime?: number) => void
+    /** The speed of the app */
+    speed: number = 1;
 
     constructor(config: AppConfig) {
         this.config = config;
@@ -63,9 +65,9 @@ export class App {
                 loopTimes++;
                 for (let i = 0; i < this.config.refreshRate; i++) {
                     self.update();
-                    for (let func of self.loopFuncs) {
-                        func(loopTimes, deltaTime);
-                    }
+                }
+                for (let func of self.loopFuncs) {
+                    func(loopTimes, deltaTime);
                 }
                 requestAnimationFrame(this.loop);
             } else if (self.status === 'stopped') {
@@ -78,7 +80,7 @@ export class App {
 
     /** Update the app */
     update(): void {
-        this.analyzer.analyzeAllField();
+        this.analyzer.analyzeAll(this.config.refreshRate);
         this.moveAllObjects();
     }
 
@@ -96,7 +98,12 @@ export class App {
     moveAllObjects(): void {
         const list = Object.values(getObjectList());
         for (const object of list) {
-            object.move(this.config.refreshRate);
+            object.move(this.config.refreshRate * this.speed);
         }
+    }
+
+    /** Set speed of the app */
+    setSpeed(speed: number): void {
+        this.speed = speed;
     }
 }

@@ -14,25 +14,11 @@ export class Analyzer {
         this.fieldList = getFieldList();
     }
 
-    /** Analyze All the field */
-    analyzeAllField(): void {
-        const fields = Object.values(this.fieldList);
-        for (const field of fields) {
-            this.analyzeField(field);
-        }
-    }
-
-    /** Analyze the field of the object */
-    analyzeField(field: Field<any>): void {
-        const objects = Object.values(this.objectList);
-        for (const object of objects) {
-            if (!object.mass) continue;
-            const force = field.calculateForce(object);
-            const acceleration = [force[0] / object.mass, force[1] / object.mass];
-            object.acceleration[0] += acceleration[0];
-            object.acceleration[1] += acceleration[1];
-            object.velocity[0] += acceleration[0];
-            object.velocity[1] += acceleration[1];
+    /** Analyze all the object */
+    analyzeAll(rate: number): void {
+        const list = Object.values(this.objectList);
+        for (const obj of list) {
+            obj.calculateAcceleration(rate);
         }
     }
 }

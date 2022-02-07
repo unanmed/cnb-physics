@@ -1,4 +1,10 @@
 import { GeneralObject } from "./object";
+import { ObjectOptions } from "./object";
+
+interface RoundOptions extends ObjectOptions {
+    radius: number;
+}
+
 /** A round object that extends general object */
 export class RoundObject extends GeneralObject {
     /** The radius of the object */
@@ -9,8 +15,8 @@ export class RoundObject extends GeneralObject {
      * @param {string} description The description of the object
      * @param {number} radius The radius of the object
      */
-    constructor(name: string, description: string, radius: number, mass: number) {
-        super(name, description, mass);
-        this.radius = radius;
+    constructor(name: string, config: RoundOptions) {
+        super(name, config);
+        this.radius = config.radius;
     }
 }
