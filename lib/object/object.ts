@@ -99,8 +99,8 @@ export class GeneralObject {
 
     /** Move this object */
     move(rate: number = 1) {
-        this.position[0] += this.velocity[0] / rate;
-        this.position[1] += this.velocity[1] / rate;
+        this.position[0] += this.velocity[0] / rate / 60;
+        this.position[1] += this.velocity[1] / rate / 60;
     }
 
     /** Set the velocity of the object */

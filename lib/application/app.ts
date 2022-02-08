@@ -57,13 +57,14 @@ export class App {
         let lastTime = 0;
         let self = this;
         this.loop = (time: number) => {
+            if (typeof this.speed !== 'number') this.speed = parseFloat(this.speed);
             if (self.status === 'paused') {
                 return requestAnimationFrame(this.loop);
             } else if (self.status === 'running') {
                 let deltaTime = time - lastTime;
                 lastTime = time;
                 loopTimes++;
-                for (let i = 0; i < this.config.refreshRate; i++) {
+                for (let i = 0; i < this.config.refreshRate * this.speed; i++) {
                     self.update();
                 }
                 for (let func of self.loopFuncs) {
@@ -98,7 +99,7 @@ export class App {
     moveAllObjects(): void {
         const list = Object.values(getObjectList());
         for (const object of list) {
-            object.move(this.config.refreshRate * this.speed);
+            object.move(this.config.refreshRate);
         }
     }
 
