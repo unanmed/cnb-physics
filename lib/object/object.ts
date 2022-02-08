@@ -140,8 +140,8 @@ export class GeneralObject {
         acceleration[0] = force[0] / this.mass;
         acceleration[1] = force[1] / this.mass;
         this.acceleration = acceleration;
-        this.velocity[0] += acceleration[0] / rate;
-        this.velocity[1] += acceleration[1] / rate;
+        this.velocity[0] += acceleration[0] / rate / 60;
+        this.velocity[1] += acceleration[1] / rate / 60;
         return acceleration;
     }
 }
