@@ -18,12 +18,17 @@ export class Field<T extends keyof FieldList> {
     static idCounter: number = 0;
     /** The type of the field */
     readonly type: T;
-    /** The magnitude of the field */
+    /** The magnitude of the field. Not available for magnetic field */
     magnitude: [number, number, number?];
     /** The name of the field */
     readonly name: string;
     /** The id of the field */
     readonly id: number;
+    /** The magniyude of the field if the field is a magnetic field.
+     * If the value is positive, the direction of the field is vertical screen outward.
+     * If the value is negative, the direction of the field is vertical screen inward.
+     */
+    magneticMagnitude: number;
 
     /** Create a new field
      * @param {string} name The name of the field
@@ -35,6 +40,7 @@ export class Field<T extends keyof FieldList> {
         this.type = type;
         this.magnitude = magnitude;
         this.id = Field.idCounter++;
+        if (type === 'magnetic') this.magneticMagnitude = magnitude[2];
         setField(this);
     }
 

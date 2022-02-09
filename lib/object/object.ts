@@ -5,10 +5,6 @@ import { Force } from "../force/force";
 import { Shape } from "../shape/shape";
 import { getFieldList, setObject } from "../utils/utils";
 
-export interface ObjectOptions extends GeneralObject {
-
-}
-
 /** A general object that can be calculated by the core physical simulator */
 export class GeneralObject {
     /** The id counter of the object */
@@ -41,7 +37,7 @@ export class GeneralObject {
      * @param {string} name The name of the object
      * @param {string} description The description of the object
      */
-    constructor(name: string, config: ObjectOptions) {
+    constructor(name: string, config: GeneralObject) {
         this.name = name;
         this.id = GeneralObject.idCounter++;
         this.gravityField = new GravityField(this.name, this);
@@ -50,7 +46,7 @@ export class GeneralObject {
     }
 
     /** Set the object by given config */
-    setConfig(config: ObjectOptions) {
+    setConfig(config: GeneralObject) {
         if (config.description) this.description = config.description;
         if (config.mass) this.setMass(config.mass);
         if (config.position) this.setPosition(config.position[0], config.position[1]);

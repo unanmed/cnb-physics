@@ -1,3 +1,5 @@
+type Type = 'circle' | 'polygon' | string;
+
 /** The shape of a object or other things */
 export class Shape {
     /** The node of the shape */
@@ -14,17 +16,18 @@ export class Shape {
     /**
      * Creates a new shape
      * @param {string} type The type of the shape
-     * @param {string} id The id of the shape
      * @param {[number, number]} center The node of the shape
-     * @param {Array<[number, number]>} node The node of the shape. 
+     * @param {Array<[number, number]>|number} node The node of the shape. 
      * The node is a 2D array that every node
-     * includes the position of x and y. The node must be closed.
+     * includes the position of x and y.
+     * if the type is circle, the node is the radius of the circle.
      */
-    constructor(id: string, type: string, center: [number, number], node: Array<[number, number]>) {
-        this.id = id;
+    constructor(type: Type, center: [number, number], radius: number)
+    constructor(type: Type, center: [number, number], node: Array<[number, number]> | number) {
         this.type = type;
         this.center = center;
-        this.setNode(node);
+        if (node instanceof Array) this.setNode(node);
+        else this.radius = node;
     }
 
     /** Set the node of the shape. The node is a 2D array that every node
@@ -32,7 +35,8 @@ export class Shape {
      */
     setNode(node: Array<[number, number]>) {
         this.node = node;
-        this.node.push(node[0]);
+        if (JSON.stringify(node[0]) !== JSON.stringify(node[node.length - 1]))
+            this.node.push(node[0]);
     }
 
     /** Set the radius of the shape */
