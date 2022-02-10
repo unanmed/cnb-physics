@@ -16,13 +16,15 @@ export class Shape {
     /**
      * Creates a new shape
      * @param {string} type The type of the shape
-     * @param {[number, number]} center The node of the shape
+     * @param {[number, number]} center The node of the shape. 
+     * If the type isn't circle, the parameter has no effect.
      * @param {Array<[number, number]>|number} node The node of the shape. 
      * The node is a 2D array that every node
      * includes the position of x and y.
      * if the type is circle, the node is the radius of the circle.
      */
-    constructor(type: Type, center: [number, number], radius: number)
+    constructor(type: Type, center: [number, number], radius: number);
+    constructor(type: Type, center: [number, number], node: Array<[number, number]>);
     constructor(type: Type, center: [number, number], node: Array<[number, number]> | number) {
         this.type = type;
         this.center = center;
