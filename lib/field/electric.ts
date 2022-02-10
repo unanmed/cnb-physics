@@ -6,23 +6,22 @@ import { GeneralObject } from "../object/object";
 export class UniformElectricField extends ScopedField<'electric'> {
     /** The magnitude of the field */
     magnitude: [number, number];
-    /** The shape of the field */
-    shape: Shape;
 
     /** Create a uniform electric field */
-    constructor(name: string, magnitude: [number, number], shape: Shape) {
+    constructor(name: string, magnitude: [number, number], shape: Shape, position: [number, number] = [0, 0]) {
         super(name, 'electric', magnitude);
         this.setShape(shape);
+        this.position = position;
     }
 
     /** Judge whether a object is in this field */
-    isInField(object: GeneralObject): boolean {
-        return this.shape.isInShape(object.position);
+    isInField(object: GeneralObject, position: [number, number] = [0, 0]): boolean {
+        return this.shape.isInShape(object.position, position);
     }
 
     /** Calculate the force of the field */
     calculateForceElectic(object: GeneralObject): [number, number] {
-        if (!this.isInField(object)) return [0, 0];
+        if (!this.isInField(object, this.position)) return [0, 0];
         const force: [number, number] = [0, 0];
         const x = this.magnitude[0] * object.charge;
         const y = this.magnitude[1] * object.charge;

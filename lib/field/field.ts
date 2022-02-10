@@ -54,10 +54,13 @@ export class Field<T extends keyof FieldList> {
 export class ScopedField<T extends keyof FieldList> extends Field<T> {
     /** The shape of the field */
     shape: Shape;
+    /** The left top position of the field */
+    position: [number, number];
 
     /** Create a scoped field */
-    constructor(name: string, type: T, magnitude?: [number, number, number?]) {
+    constructor(name: string, type: T, magnitude?: [number, number, number?], position: [number, number] = [0, 0]) {
         super(name, type, magnitude);
+        this.position = position;
     }
 }
 

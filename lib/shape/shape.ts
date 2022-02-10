@@ -45,7 +45,8 @@ export class Shape {
     }
 
     /** Judge whether a point is in the shape */
-    isInShape(point: [number, number]): boolean {
+    isInShape(point: [number, number], position: [number, number] = [0, 0]): boolean {
+        point = [point[0] - position[0], point[1] - position[1]];
         if (this.type === 'circle') {
             return Math.pow(point[0] - this.center[0], 2) + Math.pow(point[1] - this.center[1], 2) <= Math.pow(this.radius, 2);
         } else if (this.type === 'polygon') {
